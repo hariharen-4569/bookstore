@@ -3,18 +3,25 @@ kind: Deployment
 metadata:
   name: bookstore-deployment
 spec:
-  replicas: 1
+  replicas: 1  # Number of replicas to deploy (typically 1 for a basic setup)
   selector:
     matchLabels:
-      app: bookstore
+      app: bookstore  # Ensure this matches the labels in the template
   template:
     metadata:
       labels:
-        app: bookstore
+        app: bookstore  # This label should match the selector above
     spec:
       containers:
-        - name: bookstore
-          image: hariharen4569/bookstore:latest
+        - name: bookstore  # Name of the container within the pod
+          image: hariharen4569/bookstore:latest  # Docker image for the container
           ports:
-            - containerPort: 80
-
+            - containerPort: 80  # Port exposed by the container
+          # Optional resource limits and requests for better control
+          resources:
+            requests:
+              memory: "64Mi"  # Minimum memory requested
+              cpu: "250m"     # Minimum CPU requested
+            limits:
+              memory: "128Mi" # Maximum memory limit
+              cpu: "500m"     # Maximum CPU limit
