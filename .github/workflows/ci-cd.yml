@@ -27,8 +27,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t yourdockerhubusername/bookstore:latest .
-          docker push yourdockerhubusername/bookstore:latest
+          docker build -t hariharen4569/bookstore:latest .
+          docker push hariharen4569/bookstore:latest
 
   deploy:
     runs-on: ubuntu-latest
