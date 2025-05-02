@@ -1,20 +1,55 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: bookstore-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: bookstore
-  template:
-    metadata:
-      labels:
-        app: bookstore
-    spec:
-      containers:
-        - name: bookstore
-          image: yourdockerhubusername/bookstore:latest
-          ports:
-            - containerPort: 80
+name: CI/CD Pipeline for Bookstore App
 
+on:
+  push:
+    branches:
+      - main  # Trigger the pipeline on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger the pipeline on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t yourdockerhubusername/bookstore:latest .
+          docker push yourdockerhubusername/bookstore:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Ensure this job runs only after the build job is successful
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Set up Kubeconfig
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
+
+      - name: Apply Kubernetes Deployment
+        run: |
+          kubectl apply -f k8s/deployment.yml  # Ensure the correct path to your deployment file
+
+      - name: Verify Deployment
+        run: |
+          kubectl rollout status deployment/bookstore-deployment
