@@ -45,7 +45,7 @@ jobs:
       - name: Set up Kubeconfig
         run: |
           # Ensure the Kubeconfig is correctly configured for your Kubernetes cluster
-          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+          echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
 
       - name: Apply Kubernetes Deployment
