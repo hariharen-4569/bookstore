@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: bookstore
-          image: yourdockerhubusername/bookstore:latest
+          image: hariharen4569/bookstore:latest
           ports:
             - containerPort: 80
 
