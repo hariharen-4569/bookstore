@@ -27,6 +27,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+          # Build the Docker image and push it to Docker Hub
           docker build -t hariharen4569/bookstore:latest .
           docker push hariharen4569/bookstore:latest
 
@@ -43,13 +44,16 @@ jobs:
 
       - name: Set up Kubeconfig
         run: |
+          # Ensure the Kubeconfig is correctly configured for your Kubernetes cluster
           echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
 
       - name: Apply Kubernetes Deployment
         run: |
-          kubectl apply -f k8s/deployment.yml  # Ensure the correct path to your deployment file
+          # Ensure the path to your Kubernetes deployment file is correct
+          kubectl apply -f k8s/deployment.yml
 
       - name: Verify Deployment
         run: |
+          # Verify if the deployment was successful
           kubectl rollout status deployment/bookstore-deployment
