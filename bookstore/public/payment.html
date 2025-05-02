@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | Online Bookstore</title>
+    <link rel="stylesheet" href="payment.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">📚 BookStore</div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
+            <a href="cart.html">Cart</a>
+            <a href="login.html" id="auth-link">Logout</a>
+        </nav>
+    </header>
+
+    <section class="payment">
+        <h2>Checkout</h2>
+
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <ul id="cart-items">
+                <!-- Cart items will be added dynamically -->
+            </ul>
+            <p class="total">Total: <span id="total-price">₹0</span></p>
+        </div>
+
+        <div class="address-form">
+            <h3>Shipping Address</h3>
+            <label for="address">Full Address</label>
+            <textarea id="address" placeholder="Enter your full address..." required></textarea>
+
+            <label for="city">City</label>
+            <input type="text" id="city" placeholder="Enter your city" required>
+
+            <label for="country">Country</label>
+            <input type="text" id="country" placeholder="Enter your country" required>
+
+            <button id="save-address">Save Address</button>
+        </div>
+
+        <div class="payment-form" style="display: none" >
+            <h3>Payment Details</h3>
+            <form id="payment-form">
+                <label for="card-name">Cardholder Name</label>
+                <input type="text" id="card-name" required>
+
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" maxlength="16" required>
+
+                <label for="expiry">Expiry Date</label>
+                <input type="text" id="expiry" placeholder="MM/YY" required>
+
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" maxlength="3" required>
+
+                <button type="submit" class="checkout-btn" disabled>Pay Now</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Online Bookstore. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js"></script>
+    
+    <!-- Your Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Payment Logic -->
+    <script src="payment.js"></script>
+
+</body>
+
+</html>
